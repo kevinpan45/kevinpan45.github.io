@@ -5,11 +5,6 @@
  * [Demo链接](https://leopardpan.github.io/) （部署在github page）         
 
 如果你喜欢请 Star ，你的 Star 是我持续更新的动力, 谢谢 😄.
- 
-### 你在搭建个人博客遇到任何问题都可以找我
-
-遇到解决不了的问题 [需要技术支持联系我](https://leopardpan.cn/support/)
-
 
 ### 环境要求
 
