@@ -1,3 +1,11 @@
+---
+layout: post
+title: "Golang Prepare"
+date: 2021-04-01 
+description: "Installation and Setting"
+tag: Golang
+---   
+
 Start install golang and set env by this script, work on ubuntu.
 
 ```
