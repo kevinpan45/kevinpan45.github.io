@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main  # trigger branch
+      - test_workflow
 jobs:
   build:
     runs-on: ubuntu-latest
