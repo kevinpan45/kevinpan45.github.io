@@ -17,3 +17,4 @@ jobs:
         source_branch: main
         publish_repo: kevinpan45/kevinpan45.github.io
         publish_token: ${{ secrets.GITBOOK }}
+        publish_push_force: true
