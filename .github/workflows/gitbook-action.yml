@@ -15,3 +15,4 @@ jobs:
         token: ${{ secrets.GITBOOK }}  # -> remember add this in settings/secrets as following
         source_repo: kevinpan45/kevinpan45.github.io
         source_branch: main
+        publish_repo: kevinpan45/kevinpan45.github.io
