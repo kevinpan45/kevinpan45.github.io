@@ -2,8 +2,7 @@ name: 'Gitbook Action Build'
 on:
   push:
     branches:
-      - main  # trigger branch
-      - test_workflow
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
