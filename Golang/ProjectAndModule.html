@@ -1,0 +1,360 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ProjectAndModule · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="QuickStart.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Golang
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="QuickStart.html">
+            
+                <a href="QuickStart.html">
+            
+                    
+                    QuickStart
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="ProjectAndModule.html">
+            
+                <a href="ProjectAndModule.html">
+            
+                    
+                    ProjectAndModule
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >ProjectAndModule</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="go-directories">Go Directories</h2>
+<h3 id="cmd"><code>/cmd</code></h3>
+<p>Main applications for this project.</p>
+<p>The directory name for each application should match the name of the executable you want to have (e.g., <code>/cmd/myapp</code>).</p>
+<p>Don&apos;t put a lot of code in the application directory. If you think the code can be imported and used in other projects, then it should live in the <code>/pkg</code> directory. If the code is not reusable or if you don&apos;t want others to reuse it, put that code in the <code>/internal</code> directory. You&apos;ll be surprised what others will do, so be explicit about your intentions!</p>
+<p>It&apos;s common to have a small <code>main</code> function that imports and invokes the code from the <code>/internal</code> and <code>/pkg</code> directories and nothing else.</p>
+<p>See the <a href="cmd/README.md"><code>/cmd</code></a> directory for examples.</p>
+<h3 id="internal"><code>/internal</code></h3>
+<p>Private application and library code. This is the code you don&apos;t want others importing in their applications or libraries. Note that this layout pattern is enforced by the Go compiler itself. See the Go 1.4 <a href="https://golang.org/doc/go1.4#internalpackages" target="_blank"><code>release notes</code></a> for more details. Note that you are not limited to the top level <code>internal</code> directory. You can have more than one <code>internal</code> directory at any level of your project tree.</p>
+<p>You can optionally add a bit of extra structure to your internal packages to separate your shared and non-shared internal code. It&apos;s not required (especially for smaller projects), but it&apos;s nice to have visual clues showing the intended package use. Your actual application code can go in the <code>/internal/app</code> directory (e.g., <code>/internal/app/myapp</code>) and the code shared by those apps in the <code>/internal/pkg</code> directory (e.g., <code>/internal/pkg/myprivlib</code>).</p>
+<h3 id="pkg"><code>/pkg</code></h3>
+<p>Library code that&apos;s ok to use by external applications (e.g., <code>/pkg/mypubliclib</code>). Other projects will import these libraries expecting them to work, so think twice before you put something here :-) Note that the <code>internal</code> directory is a better way to ensure your private packages are not importable because it&apos;s enforced by Go. The <code>/pkg</code> directory is still a good way to explicitly communicate that the code in that directory is safe for use by others. The <a href="https://travisjeffery.com/b/2019/11/i-ll-take-pkg-over-internal/" target="_blank"><code>I&apos;ll take pkg over internal</code></a> blog post by Travis Jeffery provides a good overview of the <code>pkg</code> and <code>internal</code> directories and when it might make sense to use them.</p>
+<p>It&apos;s also a way to group Go code in one place when your root directory contains lots of non-Go components and directories making it easier to run various Go tools (as mentioned in these talks: <a href="https://www.youtube.com/watch?v=PTE4VJIdHPg" target="_blank"><code>Best Practices for Industrial Programming</code></a> from GopherCon EU 2018, <a href="https://www.youtube.com/watch?v=oL6JBUk6tj0" target="_blank">GopherCon 2018: Kat Zien - How Do You Structure Your Go Apps</a> and <a href="https://www.youtube.com/watch?v=3gQa1LWwuzk" target="_blank">GoLab 2018 - Massimiliano Pippi - Project layout patterns in Go</a>).</p>
+<p>See the <a href="pkg/README.md"><code>/pkg</code></a> directory if you want to see which popular Go repos use this project layout pattern. This is a common layout pattern, but it&apos;s not universally accepted and some in the Go community don&apos;t recommend it.</p>
+<p>It&apos;s ok not to use it if your app project is really small and where an extra level of nesting doesn&apos;t add much value (unless you really want to :-)). Think about it when it&apos;s getting big enough and your root directory gets pretty busy (especially if you have a lot of non-Go app components).</p>
+<h3 id="vendor"><code>/vendor</code></h3>
+<p>Application dependencies (managed manually or by your favorite dependency management tool like the new built-in <a href="https://github.com/golang/go/wiki/Modules" target="_blank"><code>Go Modules</code></a> feature). The <code>go mod vendor</code> command will create the <code>/vendor</code> directory for you. Note that you might need to add the <code>-mod=vendor</code> flag to your <code>go build</code> command if you are not using Go 1.14 where it&apos;s on by default.</p>
+<p>Don&apos;t commit your application dependencies if you are building a library.</p>
+<p>Note that since <a href="https://golang.org/doc/go1.13#modules" target="_blank"><code>1.13</code></a> Go also enabled the module proxy feature (using <a href="https://proxy.golang.org" target="_blank"><code>https://proxy.golang.org</code></a> as their module proxy server by default). Read more about it <a href="https://blog.golang.org/module-mirror-launch" target="_blank"><code>here</code></a> to see if it fits all of your requirements and constraints. If it does, then you won&apos;t need the <code>vendor</code> directory at all.</p>
+<h2 id="service-application-directories">Service Application Directories</h2>
+<h3 id="api"><code>/api</code></h3>
+<p>OpenAPI/Swagger specs, JSON schema files, protocol definition files.</p>
+<p>See the <a href="api/README.md"><code>/api</code></a> directory for examples.</p>
+<h2 id="web-application-directories">Web Application Directories</h2>
+<h3 id="web"><code>/web</code></h3>
+<p>Web application specific components: static web assets, server side templates and SPAs.</p>
+<h2 id="common-application-directories">Common Application Directories</h2>
+<h3 id="configs"><code>/configs</code></h3>
+<p>Configuration file templates or default configs.</p>
+<p>Put your <code>confd</code> or <code>consul-template</code> template files here.</p>
+<h3 id="init"><code>/init</code></h3>
+<p>System init (systemd, upstart, sysv) and process manager/supervisor (runit, supervisord) configs.</p>
+<h3 id="scripts"><code>/scripts</code></h3>
+<p>Scripts to perform various build, install, analysis, etc operations.</p>
+<p>These scripts keep the root level Makefile small and simple (e.g., <a href="https://github.com/hashicorp/terraform/blob/master/Makefile" target="_blank"><code>https://github.com/hashicorp/terraform/blob/master/Makefile</code></a>).</p>
+<p>See the <a href="scripts/README.md"><code>/scripts</code></a> directory for examples.</p>
+<h3 id="build"><code>/build</code></h3>
+<p>Packaging and Continuous Integration.</p>
+<p>Put your cloud (AMI), container (Docker), OS (deb, rpm, pkg) package configurations and scripts in the <code>/build/package</code> directory.</p>
+<p>Put your CI (travis, circle, drone) configurations and scripts in the <code>/build/ci</code> directory. Note that some of the CI tools (e.g., Travis CI) are very picky about the location of their config files. Try putting the config files in the <code>/build/ci</code> directory linking them to the location where the CI tools expect them (when possible).</p>
+<h3 id="deployments"><code>/deployments</code></h3>
+<p>IaaS, PaaS, system and container orchestration deployment configurations and templates (docker-compose, kubernetes/helm, mesos, terraform, bosh). Note that in some repos (especially apps deployed with kubernetes) this directory is called <code>/deploy</code>.</p>
+<h3 id="test"><code>/test</code></h3>
+<p>Additional external test apps and test data. Feel free to structure the <code>/test</code> directory anyway you want. For bigger projects it makes sense to have a data subdirectory. For example, you can have <code>/test/data</code> or <code>/test/testdata</code> if you need Go to ignore what&apos;s in that directory. Note that Go will also ignore directories or files that begin with &quot;.&quot; or &quot;_&quot;, so you have more flexibility in terms of how you name your test data directory.</p>
+<p>See the <a href="test/README.md"><code>/test</code></a> directory for examples.</p>
+<h2 id="other-directories">Other Directories</h2>
+<h3 id="docs"><code>/docs</code></h3>
+<p>Design and user documents (in addition to your godoc generated documentation).</p>
+<p>See the <a href="docs/README.md"><code>/docs</code></a> directory for examples.</p>
+<h3 id="tools"><code>/tools</code></h3>
+<p>Supporting tools for this project. Note that these tools can import code from the <code>/pkg</code> and <code>/internal</code> directories.</p>
+<p>See the <a href="tools/README.md"><code>/tools</code></a> directory for examples.</p>
+<h3 id="examples"><code>/examples</code></h3>
+<p>Examples for your applications and/or public libraries.</p>
+<p>See the <a href="examples/README.md"><code>/examples</code></a> directory for examples.</p>
+<h3 id="thirdparty"><code>/third_party</code></h3>
+<p>External helper tools, forked code and other 3rd party utilities (e.g., Swagger UI).</p>
+<h3 id="githooks"><code>/githooks</code></h3>
+<p>Git hooks.</p>
+<h3 id="assets"><code>/assets</code></h3>
+<p>Other assets to go along with your repository (images, logos, etc).</p>
+<h3 id="website"><code>/website</code></h3>
+<p>This is the place to put your project&apos;s website data if you are not using GitHub pages.</p>
+<p>See the <a href="website/README.md"><code>/website</code></a> directory for examples.</p>
+<h2 id="directories-you-shouldnt-have">Directories You Shouldn&apos;t Have</h2>
+<h3 id="src"><code>/src</code></h3>
+<p>Some Go projects do have a <code>src</code> folder, but it usually happens when the devs came from the Java world where it&apos;s a common pattern. If you can help yourself try not to adopt this Java pattern. You really don&apos;t want your Go code or Go projects to look like Java :-)</p>
+<p>Don&apos;t confuse the project level <code>/src</code> directory with the <code>/src</code> directory Go uses for its workspaces as described in <a href="https://golang.org/doc/code.html" target="_blank"><code>How to Write Go Code</code></a>. The <code>$GOPATH</code> environment variable points to your (current) workspace (by default it points to <code>$HOME/go</code> on non-windows systems). This workspace includes the top level <code>/pkg</code>, <code>/bin</code> and <code>/src</code> directories. Your actual project ends up being a sub-directory under <code>/src</code>, so if you have the <code>/src</code> directory in your project the project path will look like this: <code>/some/path/to/workspace/src/your_project/src/your_code.go</code>. Note that with Go 1.11 it&apos;s possible to have your project outside of your <code>GOPATH</code>, but it still doesn&apos;t mean it&apos;s a good idea to use this layout pattern.</p>
+<p>Learn from <a href="https://github.com/golang-standards/project-layout/blob/master/README_zh-CN.md" target="_blank">https://github.com/golang-standards/project-layout/blob/master/README_zh-CN.md</a></p>
+<h2 id="module-and-cli">Module and CLI</h2>
+<p>go.mod has five type of settings</p>
+<ul>
+<li>go: Goland version</li>
+<li>module: A module directive defines the main module&apos;s path. A go.mod file must contain exactly one module directive.</li>
+<li>require: module dependency</li>
+<li>replace: A replace directive replaces the contents of a specific version of a module, or all versions of a module, with contents found elsewhere. The replacement may be specified with either another module path and version, or a platform-specific file path.</li>
+<li>exclude: An exclude directive prevents a module version from being loaded by the go command.</li>
+</ul>
+<pre><code># init go.mod file 
+go mod init
+# download all modules
+go mod download
+# remove unused modules
+go mod tidy
+# copy modules to project vendor folder and check
+go mod vendor
+# check if the modules has been downloaded, or downloaded modules has been modified
+go mod verify
+# view all modules
+go list -m all
+# view module graph
+go mod graph
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="QuickStart.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: QuickStart">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ProjectAndModule","level":"1.2.2","depth":2,"previous":{"title":"QuickStart","level":"1.2.1","depth":2,"path":"Golang/QuickStart.md","ref":"./Golang/QuickStart.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Golang/ProjectAndModule.md","mtime":"2021-04-02T08:19:04.712Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-04-02T08:19:35.446Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
