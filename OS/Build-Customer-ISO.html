@@ -57,8 +57,6 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ProjectAndModule.html" />
-    
     
 
     </head>
@@ -114,9 +112,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="QuickStart.html">
+        <li class="chapter " data-level="1.2.1" data-path="../Golang/QuickStart.html">
             
-                <a href="QuickStart.html">
+                <a href="../Golang/QuickStart.html">
             
                     
                     QuickStart
@@ -127,9 +125,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="ProjectAndModule.html">
+        <li class="chapter " data-level="1.2.2" data-path="../Golang/ProjectAndModule.html">
             
-                <a href="ProjectAndModule.html">
+                <a href="../Golang/ProjectAndModule.html">
             
                     
                     ProjectAndModule
@@ -191,9 +189,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../OS/Build-Customer-ISO.html">
+        <li class="chapter active" data-level="1.4.1" data-path="Build-Customer-ISO.html">
             
-                <a href="../OS/Build-Customer-ISO.html">
+                <a href="Build-Customer-ISO.html">
             
                     
                     QuickStart
@@ -254,21 +252,67 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p>Start install golang and set env by this script, work on ubuntu.</p>
-<pre><code>#Download and install golang
-wget https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
-rm -rf /usr/local/go &amp;&amp; tar -C /usr/local -xzf go1.16.2.linux-amd64.tar.gz
+                                <h1 id="description">Description</h1>
+<p>How do web usually build a custom image</p>
+<ol>
+<li>Create a virtual machine(VM)</li>
+<li>SSH to VM</li>
+<li>Set networking</li>
+<li>Set system config</li>
+<li>Install software</li>
+<li>Clean instal package</li>
+<li>Clean system ops mark</li>
+<li>Build image by virtualization management platform or software</li>
+</ol>
+<p>Case Problems</p>
+<ul>
+<li>Create VM takes a long time</li>
+<li>Ops need watching</li>
+<li>Ops need people learn relate tech knowledge</li>
+<li>Huge cost when need retry or restart process</li>
+<li>Image available cannot be test</li>
+</ul>
+<p>Design Goals</p>
+<ul>
+<li>Unattended</li>
+<li>Testability</li>
+<li>Easy to execute</li>
+<li>Configuration Templating</li>
+</ul>
+<p>Design Ideas</p>
+<ul>
+<li>Packer : Generate basic virtual machine image with customer software and system settings, configuration templating</li>
+<li>Kickstart : Auto install configuration, avoid OS install process</li>
+<li>genisoimage : VM image to ISO image for regular boot or UEFI secure boot</li>
+</ul>
+<h2 id="build-virtual-machine-image-by-hashicorp-packer">Build Virtual Machine image by HashiCorp Packer</h2>
+<p>Configuration scope:</p>
+<ul>
+<li>Basic OS image</li>
+<li>Disk partition strategy</li>
+<li>Network setting</li>
+<li>Custom softwares</li>
+<li>Custom scripts execution</li>
+</ul>
+<h2 id="writter-kickstart-file">Writter Kickstart File</h2>
+<p>kickstart file</p>
+<pre><code># OS Layer 
 
-#Set golang bin path
-export PATH=$PATH:/usr/local/go/bin
-source ~/.profile
+# Disk partition
 
-#Set proxy
-go env -w GO111MODULE=on
-go env -w GOPROXY=https://goproxy.cn,direct
-</code></pre><p>Test</p>
-<pre><code>go version
-</code></pre>
+# Networking
+
+# Init software in OS rpm folder 
+
+# Scripts Execution
+</code></pre><h2 id="create-an-installer-iso-image-with-a-custom-installation-or-upgrade-script">Create an Installer ISO Image with a Custom Installation or Upgrade Script</h2>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.upgrade.doc/GUID-C03EADEA-A192-4AB4-9B71-9256A9CB1F9C.html" target="_blank">https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.upgrade.doc/GUID-C03EADEA-A192-4AB4-9B71-9256A9CB1F9C.html</a></li>
+<li><a href="https://gmusumeci.medium.com/how-to-use-packer-to-build-a-centos-template-for-vmware-vsphere-dea37d95b7b1" target="_blank">https://gmusumeci.medium.com/how-to-use-packer-to-build-a-centos-template-for-vmware-vsphere-dea37d95b7b1</a></li>
+<li><a href="https://gist.github.com/szurcher/12a1546eb610e1e7ebb65b6feca468ac" target="_blank">https://gist.github.com/szurcher/12a1546eb610e1e7ebb65b6feca468ac</a></li>
+</ul>
+
                                 
                                 </section>
                             
@@ -296,10 +340,6 @@ go env -w GOPROXY=https://goproxy.cn,direct
             
                 
                 
-                <a href="ProjectAndModule.html" class="navigation navigation-next navigation-unique" aria-label="Next page: ProjectAndModule">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
             
         
     </div>
@@ -307,7 +347,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"QuickStart","level":"1.2.1","depth":2,"next":{"title":"ProjectAndModule","level":"1.2.2","depth":2,"path":"Golang/ProjectAndModule.md","ref":"./Golang/ProjectAndModule.md","articles":[]},"previous":{"title":"Golang","level":"1.2","depth":1,"ref":"","articles":[{"title":"QuickStart","level":"1.2.1","depth":2,"path":"Golang/QuickStart.md","ref":"./Golang/QuickStart.md","articles":[]},{"title":"ProjectAndModule","level":"1.2.2","depth":2,"path":"Golang/ProjectAndModule.md","ref":"./Golang/ProjectAndModule.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Golang/QuickStart.md","mtime":"2021-08-27T08:10:05.934Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-08-27T08:10:32.138Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"QuickStart","level":"1.4.1","depth":2,"previous":{"title":"OS","level":"1.4","depth":1,"ref":"","articles":[{"title":"QuickStart","level":"1.4.1","depth":2,"path":"OS/Build-Customer-ISO.md","ref":"./OS/Build-Customer-ISO.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"OS/Build-Customer-ISO.md","mtime":"2021-08-27T08:10:05.934Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-08-27T08:10:32.138Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
