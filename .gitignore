@@ -1,0 +1,4 @@
+# ignore mkdocs build file
+build/
+# ignore mkdocs site directory
+site/
