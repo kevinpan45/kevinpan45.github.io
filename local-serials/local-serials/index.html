@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Overview - KP45 Blogs</title>
+    <title>Local Serial Hardware Products - KP45 Blogs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Overview";
-        var mkdocs_page_input_path = "hashicorp/overview.md";
+        var mkdocs_page_name = "Local Serial Hardware Products";
+        var mkdocs_page_input_path = "local-serials/local-serials.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -48,19 +48,25 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Hashicorp</span></p>
-              <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../consul/">Consul</a>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/consul/">Consul</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../nomad/">Nomad</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/nomad/">Nomad</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Overview</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/overview/">Overview</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../vault/">Vault</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/vault/">Vault</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Local serials</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../local-serials/local-serials/">Local Serial Hardware Products</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Local Serial Hardware Products</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#local-mirror">Local Mirror</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#local-stack">Local Stack</a>
+    </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -77,8 +83,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Hashicorp</li>
-      <li class="breadcrumb-item active">Overview</li>
+          <li class="breadcrumb-item">Local serials</li>
+      <li class="breadcrumb-item active">Local Serial Hardware Products</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -87,13 +93,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="local-serial-hardware-products">Local Serial Hardware Products</h1>
+<p><img alt="Local Serials" src="../img/kp45-boxes.excalidraw.png" />
+- Local Mirror: A local mirror of development artifacts and software packages based on the NAS.
+- Local Stack: A local stack of development environments with service governance and persistence.
+- Local DevBox: A local development environment for coding and testing.</p>
+<h2 id="local-mirror">Local Mirror</h2>
+<p>Hardware (recommendation):
+- CPU: 8 core 16 thread
+- RAM: 32GB DDR4
+- Storage: 1TB NVMe SSD (OS), 4TB HDD (Data) * 2
+- Network: 2.5Gbps Ethernet * 2</p>
+<p>Software:
+TrueNAS offer s3 service as Nexus blob storage.
+- NAS: TrueNAS Core (<a href="https://www.truenas.com/docs/core/gettingstarted/corehardwareguide/#minimum-hardware-requirements">Minimum Hardware Requirements</a>)
+    - Processor: 2-Core Intel 64-Bit or AMD x86_64 processor
+    - Memory: 8 GB Memory
+    - Boot Device: 16 GB SSD boot device
+    - Storage: Two identically-sized devices for a single storage pool
+- Mirror: Sonatype Nexus Repository
+    - CPU: 8 core
+    - RAM: 16GB
+- System Ops: Nomad
+- Firewall: jumpserver</p>
+<h2 id="local-stack">Local Stack</h2>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../nomad/" class="btn btn-neutral float-left" title="Nomad"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../vault/" class="btn btn-neutral float-right" title="Vault">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../hashicorp/vault/" class="btn btn-neutral float-left" title="Vault"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -116,10 +144,8 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../nomad/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../hashicorp/vault/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-    
-      <span><a href="../vault/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
