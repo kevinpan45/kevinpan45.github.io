@@ -255,6 +255,18 @@ job &quot;openneuro-dataset-sync-to-minio&quot; {
 </ul>
 <pre><code class="language-bash">nomad job run -var=&quot;dataset=ds004776&quot; openneuro.nomad.hcl
 </code></pre>
+<h2 id="optional">Optional</h2>
+<h3 id="nomad-pack">Nomad Pack</h3>
+<ol>
+<li>
+<p>Install Nomad Pack : https://github.com/hashicorp/nomad-pack-community-registry</p>
+</li>
+<li>
+<p>add default registry</p>
+</li>
+</ol>
+<pre><code class="language-bash">nomad-pack registry add default https://github.com/hashicorp/nomad-pack-community-registry
+</code></pre>
               
             </div>
           </div><footer>
