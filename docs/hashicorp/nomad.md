@@ -198,3 +198,9 @@ nomad job run -var="dataset=ds004776" openneuro.nomad.hcl
 ```bash
 nomad-pack registry add default https://github.com/hashicorp/nomad-pack-community-registry
 ```
+
+## CLI Sample
+```bash
+# restart task in job
+nomad job restart -task=<task name> <job name>
+```
