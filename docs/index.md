@@ -30,6 +30,7 @@
 - https://dbdiagram.io/d/630c5845f1a9b01b0ffd4082
 - https://tableconvert.com/sql-to-markdown
 - https://geoping.gg/
+- https://nikitahl.github.io/svg-2-code/
 
 ## Dev Spec
 - https://oam.dev/
