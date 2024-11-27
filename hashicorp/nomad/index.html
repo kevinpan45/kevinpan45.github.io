@@ -47,6 +47,11 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../common-cli/">Common cli</a>
                 </li>
               </ul>
+              <p class="caption"><span class="caption-text">Bids</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../bids/collection/">Collection</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">Hashicorp</span></p>
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../consul/">Consul</a>
@@ -266,6 +271,10 @@ job &quot;openneuro-dataset-sync-to-minio&quot; {
 </li>
 </ol>
 <pre><code class="language-bash">nomad-pack registry add default https://github.com/hashicorp/nomad-pack-community-registry
+</code></pre>
+<h2 id="cli-sample">CLI Sample</h2>
+<pre><code class="language-bash"># restart task in job
+nomad job restart -task=&lt;task name&gt; &lt;job name&gt;
 </code></pre>
               
             </div>
