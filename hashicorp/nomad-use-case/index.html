@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Vault - KP45 Blogs</title>
+    <title>Nomad use case - KP45 Blogs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Vault";
-        var mkdocs_page_input_path = "hashicorp/vault.md";
+        var mkdocs_page_name = "Nomad use case";
+        var mkdocs_page_input_path = "hashicorp/nomad-use-case.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -56,13 +56,15 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../consul/">Consul</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../nomad-use-case/">Nomad use case</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Nomad use case</a>
+    <ul class="current">
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../nomad/">Nomad</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Vault</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../vault/">Vault</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Local serials</span></p>
@@ -90,7 +92,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Hashicorp</li>
-      <li class="breadcrumb-item active">Vault</li>
+      <li class="breadcrumb-item active">Nomad use case</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -99,13 +101,73 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h2 id="run-task-with-specific-parameter">Run task with specific parameter</h2>
+<p>Use case: collect OpenNeuro dataset with accession number, run a new task of each dataset collection requirement.</p>
+<ol>
+<li>Create Job</li>
+</ol>
+<pre><code class="language-bash">vim openneuro-collector.hcl
+</code></pre>
+<pre><code class="language-hcl">job &quot;openneuro-dataset-sync-to-minio&quot; {
+  datacenters = [&quot;dc1&quot;]
+  type        = &quot;batch&quot;
+  parameterized {
+    meta_required = [&quot;DATASET&quot;]
+  }
+  group &quot;dataset-sync&quot; {
+    task &quot;openneuro&quot; {
+      driver = &quot;docker&quot;
+
+      template {
+        data        = &lt;&lt;EOF
+                        {{- with nomadVar &quot;nomad/jobs&quot; -}}
+                        [minio]
+                        type = s3
+                        provider = Minio
+                        env_auth = false
+                        access_key_id = {{ .MINIO_ACCESS_KEY }}
+                        secret_access_key = {{ .MINIO_SECRECT_KEY }}
+                        region =
+                        endpoint = {{ .MINIO_ENDPOINT}}
+
+                        [s3]
+                        type = s3
+                        provider = AWS
+                        endpoint = https://s3.amazonaws.com
+                        {{- end }}
+                      EOF
+        destination = &quot;local/rclone.conf&quot;
+      }
+
+      config {
+        image = &quot;rclone/rclone:latest&quot;
+        args  = [&quot;sync&quot;, &quot;s3:openneuro.org/${NOMAD_META_DATASET}&quot;, &quot;minio:bids/${NOMAD_META_DATASET}&quot;, &quot;--verbose&quot;]
+        mounts = [
+          {
+            type = &quot;bind&quot;
+            source = &quot;local&quot;
+            target = &quot;/config/rclone/&quot;
+          }
+        ]
+      }
+    }
+  }
+}
+
+</code></pre>
+<pre><code class="language-bash">nomad job run openneuro-collector.hcl
+</code></pre>
+<ol>
+<li>Dispatch Job</li>
+</ol>
+<pre><code class="language-bash">nomad job dispatch -meta &quot;DATASET=ds004776&quot; openneuro-dataset-sync-to-minio
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../overview/" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../local-serials/local-serials/" class="btn btn-neutral float-right" title="Local Serial Hardware Products">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../consul/" class="btn btn-neutral float-left" title="Consul"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../nomad/" class="btn btn-neutral float-right" title="Nomad">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -128,10 +190,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../overview/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../consul/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../local-serials/local-serials/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../nomad/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
