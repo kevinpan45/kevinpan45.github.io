@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Consul - KP45 Blogs</title>
+    <title>OpenVPN - KP45 Blogs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Consul";
-        var mkdocs_page_input_path = "hashicorp/consul.md";
+        var mkdocs_page_name = "OpenVPN";
+        var mkdocs_page_input_path = "home-lab/OpenVPN.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -53,21 +53,21 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Hashicorp</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Consul</a>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/consul/">Consul</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../nomad-use-case/">Nomad use case</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/nomad-use-case/">Nomad use case</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../nomad/">Nomad</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/nomad/">Nomad</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/overview/">Overview</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../vault/">Vault</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../hashicorp/vault/">Vault</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Home lab</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../home-lab/OpenVPN/">OpenVPN</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">OpenVPN</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Local serials</span></p>
@@ -94,8 +94,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Hashicorp</li>
-      <li class="breadcrumb-item active">Consul</li>
+          <li class="breadcrumb-item">Home lab</li>
+      <li class="breadcrumb-item active">OpenVPN</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -104,13 +104,62 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <p>Connect to your home lab from anywhere with OpenVPN</p>
+<p>Prerequisites:</p>
+<ul>
+<li>Router has public IPv4/IPv6 address</li>
+<li>Router supports port forwarding</li>
+</ul>
+<p>Devices:
+- OpenVPN Access Server: Ubuntu 24.04
+- OpenVPN Client: Windows 10
+- Router: Redmi AX5</p>
+<ol>
+<li>Install OpenVPN</li>
+</ol>
+<pre><code class="language-bash">bash &lt;(curl -fsS https://packages.openvpn.net/as/install.sh) --yes
+</code></pre>
+<ol>
+<li>Configure OpenVPN Access Server</li>
+</ol>
+<p>Official documentation: https://openvpn.net/as-docs/tutorials/tutorial--configure-access-server.html</p>
+<ul>
+<li>Change default connect port to 1194</li>
+<li>
+<p>Disable useless features and ports</p>
+</li>
+<li>
+<p>Configure Port Forwarding in Router</p>
+</li>
+</ul>
+<p>Forward TCPUDP port 11194 to OpenVPN Access Server 1194
+Redmi router: Advanced settings -&gt; Port forwarding -&gt; Add port forwarding
+<img alt="alt" src="../router-openvpn-port-forward.png" /></p>
+<ol>
+<li>
+<p>Export OpenVPN Configuration</p>
+</li>
+<li>
+<p>Install OpenVPN Client</p>
+</li>
+<li>
+<p>Add LAN Route to OpenVPN Client Confugration File (Optional)</p>
+</li>
+</ol>
+<p>Sometimes, DNS error may occur when connecting to the OpenVPN server, you can only access LAN IP but not the internet. To solve this problem, you need to add a route to the LAN IP in the OpenVPN client configuration file.</p>
+<pre><code># Sample of Redmi router with default IP range
+route-nopull
+route 192.168.31.0 255.255.255.0 vpn_gateway
+</code></pre>
+<ol>
+<li>Connect to OpenVPN Server</li>
+</ol>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../bids/collection/" class="btn btn-neutral float-left" title="Collection"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../nomad-use-case/" class="btn btn-neutral float-right" title="Nomad use case">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../hashicorp/vault/" class="btn btn-neutral float-left" title="Vault"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../local-serials/local-serials/" class="btn btn-neutral float-right" title="Local Serial Hardware Products">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -133,10 +182,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../bids/collection/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../hashicorp/vault/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../nomad-use-case/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../local-serials/local-serials/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
