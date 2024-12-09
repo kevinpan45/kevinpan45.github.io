@@ -1,6 +1,5 @@
-# 微服务认证体系设计
+# Authentication and Authorization System Design
 
-## API网关架构演进
 ![Authorization evolution](./authentication/authorization-mode.png)
 
 ### 需求分析
