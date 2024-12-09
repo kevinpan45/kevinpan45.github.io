@@ -328,13 +328,87 @@ KMS -> ResourceServer : JWKS
 | KMS        | Vault                          |
 | APIGateway | SpringCloud Gateway            |
 
-### SpringCloud Gateway请求认证
 
-### 微服务认证&授权信息转换为Principals
+Sample code in Repository: [basic-framework](https://github.com/kevinpan45/basic-framework/tree/enhance/upgrade-springboot-3x)
 
-### 通过AOP使用和传递JWT
+### Spring Resource Server with JWT
 
-#### 内部RPC请求调用
+Reference: [OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
+
+1. Add Spring dependencies
+
+```xml
+<!-- Spring Security OAuth 2.0 Resource Server JWT -->
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-oauth2-resource-server</artifactId>
+</dependency>
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-oauth2-jose</artifactId>
+</dependency>
+```
+
+2. Configure JWKS in `application.yml`
+
+```yaml
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://idp.example.com
+          jwk-set-uri: https://idp.example.com/.well-known/jwks.json
+```
+
+3. Spring Security Configuration to Enable JWT Validation
+
+```java
+@EnableWebSecurity
+@Configuration(proxyBeanMethods = false)
+public class SecurityConfiguration {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
+                .anyRequest().authenticated()).oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationEventPublisher authenticationEventPublisher(
+            ApplicationEventPublisher applicationEventPublisher) {
+        return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
+    }
+}
+```
+
+### Customise principals with JWT tokens
+
+1. Listen Authenticated Event: `@EventListener public void onSuccess(AuthenticationSuccessEvent success) {}`
+2. Get JWT Object: `AuthenticationSuccessEvent.getAuthentication().getPrincipal()`
+3. Convert JWT to Customize Entity: `JwtProvider.handle(Jwt jwt)`
+4. Add Entity to `ThreadLocal`: `ThreadLocal<T>.set(T)`
+
+### Passing JWT through ThreadLocal and Use in Anywhere
+
+[IamContextHolder.java](https://github.com/kevinpan45/basic-framework/blob/enhance/upgrade-springboot-3x/src/main/java/io/github/kevinpan45/common/iam/context/IamContextHolder.java)
+
+
+#### RPC Client with JWT
+OpenFeign Request Interceptor
+
+```java
+public class FeignClientInterceptor implements RequestInterceptor {
+    @Override
+    public void apply(RequestTemplate template) {
+        template.header("Authorization", "Bearer " + IamContextHolder.getContext());
+    }
+}
+```
 
 
 ## 引用
