@@ -6,6 +6,7 @@ Prerequisites:
 - Router supports port forwarding
 
 Devices:
+
 - OpenVPN Access Server: Ubuntu 24.04
 - OpenVPN Client: Windows 10
 - Router: Redmi AX5
