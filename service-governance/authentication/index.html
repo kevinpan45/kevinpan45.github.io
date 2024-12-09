@@ -146,13 +146,13 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_17">技术实现</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#springcloud-gateway">SpringCloud Gateway请求认证</a>
+    <li class="toctree-l3"><a class="reference internal" href="#spring-resource-server-with-jwt">Spring Resource Server with JWT</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#principals">微服务认证&amp;授权信息转换为Principals</a>
+    <li class="toctree-l3"><a class="reference internal" href="#customise-principals-with-jwt-tokens">Customise principals with JWT tokens</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#aopjwt">通过AOP使用和传递JWT</a>
+    <li class="toctree-l3"><a class="reference internal" href="#passing-jwt-through-threadlocal-and-use-in-anywhere">Passing JWT through ThreadLocal and Use in Anywhere</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#rpc">内部RPC请求调用</a>
+    <li class="toctree-l4"><a class="reference internal" href="#rpc-client-with-jwt">RPC Client with JWT</a>
     </li>
         </ul>
     </li>
@@ -491,10 +491,75 @@
 </tr>
 </tbody>
 </table>
-<h3 id="springcloud-gateway">SpringCloud Gateway请求认证</h3>
-<h3 id="principals">微服务认证&amp;授权信息转换为Principals</h3>
-<h3 id="aopjwt">通过AOP使用和传递JWT</h3>
-<h4 id="rpc">内部RPC请求调用</h4>
+<p>Sample code in Repository: <a href="https://github.com/kevinpan45/basic-framework/tree/enhance/upgrade-springboot-3x">basic-framework</a></p>
+<h3 id="spring-resource-server-with-jwt">Spring Resource Server with JWT</h3>
+<p>Reference: <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html">OAuth 2.0 Resource Server JWT</a></p>
+<ol>
+<li>Add Spring dependencies</li>
+</ol>
+<pre><code class="language-xml">&lt;!-- Spring Security OAuth 2.0 Resource Server JWT --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-oauth2-resource-server&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-oauth2-jose&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<ol>
+<li>Configure JWKS in <code>application.yml</code></li>
+</ol>
+<pre><code class="language-yaml">spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://idp.example.com
+          jwk-set-uri: https://idp.example.com/.well-known/jwks.json
+</code></pre>
+<ol>
+<li>Spring Security Configuration to Enable JWT Validation</li>
+</ol>
+<pre><code class="language-java">@EnableWebSecurity
+@Configuration(proxyBeanMethods = false)
+public class SecurityConfiguration {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorize -&gt; authorize.requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
+                .anyRequest().authenticated()).oauth2ResourceServer((oauth2) -&gt; oauth2.jwt(Customizer.withDefaults()));
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationEventPublisher authenticationEventPublisher(
+            ApplicationEventPublisher applicationEventPublisher) {
+        return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
+    }
+}
+</code></pre>
+<h3 id="customise-principals-with-jwt-tokens">Customise principals with JWT tokens</h3>
+<ol>
+<li>Listen Authenticated Event: <code>@EventListener public void onSuccess(AuthenticationSuccessEvent success) {}</code></li>
+<li>Get JWT Object: <code>AuthenticationSuccessEvent.getAuthentication().getPrincipal()</code></li>
+<li>Convert JWT to Customize Entity: <code>JwtProvider.handle(Jwt jwt)</code></li>
+<li>Add Entity to <code>ThreadLocal</code>: <code>ThreadLocal&lt;T&gt;.set(T)</code></li>
+</ol>
+<h3 id="passing-jwt-through-threadlocal-and-use-in-anywhere">Passing JWT through ThreadLocal and Use in Anywhere</h3>
+<p><a href="https://github.com/kevinpan45/basic-framework/blob/enhance/upgrade-springboot-3x/src/main/java/io/github/kevinpan45/common/iam/context/IamContextHolder.java">IamContextHolder.java</a></p>
+<h4 id="rpc-client-with-jwt">RPC Client with JWT</h4>
+<p>OpenFeign Request Interceptor</p>
+<pre><code class="language-java">public class FeignClientInterceptor implements RequestInterceptor {
+    @Override
+    public void apply(RequestTemplate template) {
+        template.header(&quot;Authorization&quot;, &quot;Bearer &quot; + IamContextHolder.getContext());
+    }
+}
+</code></pre>
 <h2 id="_18">引用</h2>
 <ul>
 <li>Subjects Principles Credentials: https://docs.oracle.com/javase/7/docs/technotes/guides/security/jgss/tutorials/glossary.html</li>
