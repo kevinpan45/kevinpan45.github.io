@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Python use in Ubuntu 24.04 - KP45 Blogs</title>
+    <title>Deploy - KP45 Blogs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -14,8 +14,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Python use in Ubuntu 24.04";
-        var mkdocs_page_input_path = "python/setup.md";
+        var mkdocs_page_name = "Deploy";
+        var mkdocs_page_input_path = "argo-workflows/deploy.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -46,8 +46,8 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Argo workflows</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../argo-workflows/deploy/">Deploy</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Deploy</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Bids</span></p>
@@ -79,10 +79,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Python</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Python use in Ubuntu 24.04</a>
-    <ul class="current">
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../python/setup/">Python use in Ubuntu 24.04</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Service governance</span></p>
@@ -104,8 +102,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Python</li>
-      <li class="breadcrumb-item active">Python use in Ubuntu 24.04</li>
+          <li class="breadcrumb-item">Argo workflows</li>
+      <li class="breadcrumb-item active">Deploy</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -114,34 +112,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="python-use-in-ubuntu-2404">Python use in Ubuntu 24.04</h1>
-<p><strong><em>Python3 is the system built-in software</em></strong></p>
-<ol>
-<li>Install Pip</li>
-</ol>
-<pre><code class="language-bash">apt install python3-pip
-</code></pre>
-<ol>
-<li>Install venv</li>
-</ol>
-<pre><code class="language-bash">apt install python3-venv
-</code></pre>
-<ol>
-<li>Create venv</li>
-</ol>
-<pre><code class="language-bash">python3 -m venv opendal_env
-</code></pre>
-<ol>
-<li>Install package in venv</li>
-</ol>
-<pre><code class="language-bash">pip3 install opendal
+                <p>Install Argo-Workflows in Local Cluster </p>
+<ul>
+<li><a href="https://argo-workflows.readthedocs.io/en/latest/quick-start/">Offical Doc</a></li>
+<li>Work on<ul>
+<li>autok3s</li>
+<li>Argo-Workflows: 3.6.2</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-bash"># install Argo-Workflows
+export ARGO_WORKFLOWS_VERSION=&quot;v3.6.2&quot;
+autok3s kubectl create namespace argo
+autok3s kubectl apply -n argo -f &quot;https://github.com/argoproj/argo-workflows/releases/download/${ARGO_WORKFLOWS_VERSION}/quick-start-minimal.yaml&quot;
+# forward port to local
+nohup autok3s kubectl -n argo port-forward --address 0.0.0.0 service/argo-server 2746:2746 &gt; port-forward.log 2&gt;&amp;1 &amp;
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../local-serials/local-serials/" class="btn btn-neutral float-left" title="Local Serial Hardware Products"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../service-governance/authentication/" class="btn btn-neutral float-right" title="Authentication and Authorization System Design">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../common-cli/" class="btn btn-neutral float-left" title="Common cli"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../bids/collection/" class="btn btn-neutral float-right" title="Collection">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -164,10 +156,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../local-serials/local-serials/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../common-cli/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../service-governance/authentication/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../bids/collection/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
