@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Collection - KP45 Blogs</title>
+    <title>BIDS Collector - KP45 Blogs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -14,8 +14,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Collection";
-        var mkdocs_page_input_path = "bids/collection.md";
+        var mkdocs_page_name = "BIDS Collector";
+        var mkdocs_page_input_path = "openneuro/BIDS-Collector.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -51,10 +51,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Bids</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Collection</a>
-    <ul class="current">
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../bids/collection/">Collection</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Hashicorp</span></p>
@@ -81,8 +79,22 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Openneuro</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../openneuro/BIDS-Collector/">BIDS Collector</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">BIDS Collector</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#rclone">Rclone</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rclone-execution-on-pipeline-platform">Rclone Execution on Pipeline Platform</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#argo-workflows">Argo-Workflows</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#hashicorp-nomad">HashiCorp Nomad</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Python</span></p>
@@ -109,8 +121,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Bids</li>
-      <li class="breadcrumb-item active">Collection</li>
+          <li class="breadcrumb-item">Openneuro</li>
+      <li class="breadcrumb-item active">BIDS Collector</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -119,17 +131,145 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="bids-resources">BIDS Resources</h2>
+                <p>Collect BIDS Dataset from OpenNeuro to Specific Object Storage(S3/OSS/Other S3 Compatible)</p>
+<p><a href="https://docs.openneuro.org/#advanced-usage">Official Supported Tools</a></p>
 <ul>
-<li>Openneuro</li>
-<li>DataLad</li>
+<li>s3</li>
+<li>Node.js CLI</li>
+<li>Datalad</li>
 </ul>
+<p>All these tools is download to local env, it's not so convenient if you want to restore to specific object storage.</p>
+<h2 id="ways-to-transfer-bids-dataset-to-specific-object-storage">Ways to Transfer BIDS Dataset to Specific Object Storage</h2>
+<h3 id="rclone">Rclone</h3>
+<ol>
+<li>Create Config File 
+<code>rclone.config</code></li>
+</ol>
+<pre><code class="language-plaintext">[minio]
+type = s3
+provider = Minio
+env_auth = false
+access_key_id = &lt;&gt;
+secret_access_key = &lt;&gt;
+region = &lt;&gt;
+endpoint = &lt;&gt;
+
+[s3]
+type = s3
+provider = AWS
+endpoint = https://s3.amazonaws.com
+</code></pre>
+<pre><code class="language-bash"># sample of OpenNeuro ds005700
+sync s3:openneuro.org/ds005700 minio:openneuro/ds005700 --verbose
+</code></pre>
+<h4 id="rclone-execution-on-pipeline-platform">Rclone Execution on Pipeline Platform</h4>
+<h5 id="argo-workflows">Argo-Workflows</h5>
+<ul>
+<li>Create Argo-Workflows Template</li>
+</ul>
+<pre><code class="language-yaml">apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: openneuro-collector
+  namespace: bids-collector
+  generateName: openneuro-collector-
+spec:
+  entrypoint: rclone
+  arguments:
+    parameters:
+    - name: dataset
+      description: Accession number of the dataset
+  templates:
+    - name: rclone
+      inputs:
+        parameters:
+        - name: dataset
+      container:
+        image: rclone/rclone:latest
+        command: [&quot;rclone&quot;]
+        args:
+          - &quot;sync&quot;
+          - &quot;s3:openneuro.org/{{workflow.parameters.dataset}}&quot;
+          - &quot;minio:bids/{{workflow.parameters.dataset}}&quot;
+          - &quot;--verbose&quot;
+        volumeMounts:
+          - name: rclone-openneuro
+            mountPath: /root/.config/rclone/
+            readOnly: true
+      volumes:
+        - name: rclone-openneuro
+          configMap:
+            name: rclone-openneuro
+</code></pre>
+<ul>
+<li>Submit Workflow</li>
+</ul>
+<pre><code class="language-bash">argo submit openneuro-collector.yaml -p dataset=ds005700
+</code></pre>
+<h5 id="hashicorp-nomad">HashiCorp Nomad</h5>
+<ul>
+<li>Create job file</li>
+</ul>
+<p><code>vim openneuro.nomad.hcl</code></p>
+<pre><code class="language-hcl">// run with var dataset
+variable &quot;dataset&quot; {
+  type = string
+}
+
+job &quot;openneuro-dataset-sync-to-minio&quot; {
+  datacenters = [&quot;dc1&quot;]
+  type        = &quot;batch&quot;
+  group &quot;dataset-sync&quot; {
+    task &quot;openneuro&quot; {
+      driver = &quot;docker&quot;
+
+      template {
+        data        = &lt;&lt;EOF
+                        {{- with nomadVar &quot;nomad/jobs&quot; -}}
+                        [minio]
+                        type = s3
+                        provider = Minio
+                        env_auth = false
+                        access_key_id = {{ .MINIO_ACCESS_KEY }}
+                        secret_access_key = {{ .MINIO_SECRECT_KEY }}
+                        region =
+                        endpoint = {{ .MINIO_ENDPOINT}}
+
+                        [s3]
+                        type = s3
+                        provider = AWS
+                        endpoint = https://s3.amazonaws.com
+                        {{- end }}
+                      EOF
+        destination = &quot;local/rclone.conf&quot;
+      }
+
+      config {
+        image = &quot;rclone/rclone:latest&quot;
+        args  = [&quot;sync&quot;, &quot;s3:openneuro.org/${var.dataset}&quot;, &quot;minio:openneuro/${var.dataset}&quot;, &quot;--verbose&quot;]
+        mounts = [
+          {
+            type = &quot;bind&quot;
+            source = &quot;local&quot;
+            target = &quot;/config/rclone/&quot;
+          }
+        ]
+      }
+    }
+  }
+}
+</code></pre>
+<ul>
+<li>Run job</li>
+</ul>
+<pre><code class="language-bash">nomad job run -var=&quot;dataset=ds004776&quot; openneuro.nomad.hcl
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../argo-workflows/deploy/" class="btn btn-neutral float-left" title="Deploy"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../hashicorp/consul/" class="btn btn-neutral float-right" title="Consul">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../local-serials/local-serials/" class="btn btn-neutral float-left" title="Local Serial Hardware Products"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../python/setup/" class="btn btn-neutral float-right" title="Python use in Ubuntu 24.04">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -152,10 +292,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../argo-workflows/deploy/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../local-serials/local-serials/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../hashicorp/consul/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../python/setup/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
