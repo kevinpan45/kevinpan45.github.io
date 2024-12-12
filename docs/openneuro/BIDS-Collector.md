@@ -35,7 +35,7 @@ endpoint = https://s3.amazonaws.com
 sync s3:openneuro.org/ds005700 minio:openneuro/ds005700 --verbose
 ```
 
-#### Run in Platform
+#### Rclone Execution on Pipeline Platform
 
 ##### Argo-Workflows
 
