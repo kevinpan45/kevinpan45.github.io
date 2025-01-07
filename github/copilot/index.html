@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Python use in Ubuntu 24.04 - KP45 Blogs</title>
+    <title>Copilot - KP45 Blogs</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -14,8 +14,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Python use in Ubuntu 24.04";
-        var mkdocs_page_input_path = "python/setup.md";
+        var mkdocs_page_name = "Copilot";
+        var mkdocs_page_input_path = "github/copilot.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -56,8 +56,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Github</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../github/copilot/">Copilot</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Copilot</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Hashicorp</span></p>
@@ -83,10 +83,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Python</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Python use in Ubuntu 24.04</a>
-    <ul class="current">
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../python/setup/">Python use in Ubuntu 24.04</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Service governance</span></p>
@@ -108,8 +106,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Python</li>
-      <li class="breadcrumb-item active">Python use in Ubuntu 24.04</li>
+          <li class="breadcrumb-item">Github</li>
+      <li class="breadcrumb-item active">Copilot</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -118,34 +116,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="python-use-in-ubuntu-2404">Python use in Ubuntu 24.04</h1>
-<p><strong><em>Python3 is the system built-in software</em></strong></p>
+                <p>Use GitHub Copilot in Shell</p>
+<p><strong><em>Test on Ubuntu24.04</em></strong></p>
 <ol>
-<li>Install Pip</li>
+<li>Install GitHub CLI</li>
 </ol>
-<pre><code class="language-bash">apt install python3-pip
+<pre><code class="language-shell">curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+
+echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main&quot; | sudo tee /etc/apt/sources.list.d/github-cli.list &gt; /dev/null
+
+apt update
+
+apt install gh
+
+gh auth login
 </code></pre>
 <ol>
-<li>Install venv</li>
+<li>Install GitHub Copilot</li>
 </ol>
-<pre><code class="language-bash">apt install python3-venv
-</code></pre>
-<ol>
-<li>Create venv</li>
-</ol>
-<pre><code class="language-bash">python3 -m venv opendal_env
-</code></pre>
-<ol>
-<li>Install package in venv</li>
-</ol>
-<pre><code class="language-bash">pip3 install opendal
+<p>refer to 
+- <a href="https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-the-cli">Installing GitHub Copilot in the CLI</a>
+- <a href="https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-the-command-line">Using GitHub Copilot in the command line</a></p>
+<pre><code class="language-shell">gh extension install github/gh-copilot
+
+# explain
+gh copilot explain &quot;sudo apt-get&quot;
+
+# suggest
+gh copilot suggest &quot;Undo the last commit&quot;
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../openneuro/BIDS-Collector/" class="btn btn-neutral float-left" title="BIDS Collector"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../service-governance/authentication/" class="btn btn-neutral float-right" title="Authentication and Authorization System Design">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../bids/collection/" class="btn btn-neutral float-left" title="Collection"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../hashicorp/nomad-use-case/" class="btn btn-neutral float-right" title="Nomad use case">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -168,10 +173,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../openneuro/BIDS-Collector/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../bids/collection/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../service-governance/authentication/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../hashicorp/nomad-use-case/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
