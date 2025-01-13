@@ -14,6 +14,8 @@ Assume the registry endpoint is `http://192.168.31.110:5000`
 
 Docker Daemon
 
+Create `/etc/docker/daemon.json` described in [Configure the Docker daemon](https://docs.docker.com/docker-hub/image-library/mirror/#configure-the-docker-daemon)
+
 ```json
 {
     "registry-mirrors": [
@@ -23,6 +25,7 @@ Docker Daemon
 ```
 
 Kubernetes
+
 Create `/etc/rancher/k3s/registries.yaml` described in [k3s Private Registry](https://docs.rancher.cn/docs/k3s/installation/private-registry/_index/)
 
 ```yaml
