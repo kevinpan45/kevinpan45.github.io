@@ -132,14 +132,15 @@
 </ul>
 <p>Assume the registry endpoint is <code>http://192.168.31.110:5000</code></p>
 <p>Docker Daemon</p>
+<p>Create <code>/etc/docker/daemon.json</code> described in <a href="https://docs.docker.com/docker-hub/image-library/mirror/#configure-the-docker-daemon">Configure the Docker daemon</a></p>
 <pre><code class="language-json">{
     &quot;registry-mirrors&quot;: [
         &quot;http://192.168.31.110:5000&quot;
     ]
 }
 </code></pre>
-<p>Kubernetes
-Create <code>/etc/rancher/k3s/registries.yaml</code> described in <a href="https://docs.rancher.cn/docs/k3s/installation/private-registry/_index/">k3s Private Registry</a></p>
+<p>Kubernetes</p>
+<p>Create <code>/etc/rancher/k3s/registries.yaml</code> described in <a href="https://docs.rancher.cn/docs/k3s/installation/private-registry/_index/">k3s Private Registry</a></p>
 <pre><code class="language-yaml">mirrors:
   &quot;docker.io&quot;:
     endpoint:
