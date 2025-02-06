@@ -1,11 +1,13 @@
+# Sefl-Hosted Registry
+
 ## Docker Registry
 
 - Create Registry
 
-Use 1panel registry as upstream mirror for docker.io, avoid the network issue in China.
+Use daocloud registry as upstream mirror for docker.io, avoid the network issue in China.
 
 ```bash
-docker run -d -p 5000:5000 -e REGISTRY_PROXY_REMOTEURL=https://docker.1panel.live --name registry registry
+docker run -d -p 5000:5000 -e REGISTRY_PROXY_REMOTEURL=https://docker.m.daocloud.io --name registry registry
 ```
 
 - Set Mirror

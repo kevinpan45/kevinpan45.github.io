@@ -16,7 +16,7 @@ nohup autok3s kubectl -n argo port-forward --address 0.0.0.0 service/argo-server
 
 ***Set Mirror Registry for Kubernetes (Optional for China)***
 
-Sample of k3s and 1panel mirror
+Sample of k3s and daocloud mirror
 
 Create `/etc/rancher/k3s/registries.yaml` described in [k3s Private Registry](https://docs.rancher.cn/docs/k3s/installation/private-registry/_index/)
 
@@ -24,7 +24,7 @@ Create `/etc/rancher/k3s/registries.yaml` described in [k3s Private Registry](ht
 mirrors:
   "docker.io":
     endpoint:
-      - https://docker.1panel.live
+      - https://docker.m.daocloud.io
 ```
 
 then restart k3s service
