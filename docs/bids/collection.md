@@ -1,3 +1,0 @@
-## BIDS Resources
-- Openneuro
-- DataLad
