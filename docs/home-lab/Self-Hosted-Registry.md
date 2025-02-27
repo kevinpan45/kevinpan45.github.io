@@ -89,3 +89,40 @@ mirrors:
     endpoint:
       - http://192.168.31.110:5000
 ```
+
+## Advanced
+
+### S3 as Storage
+
+CNCF Distribution support [S3 Storage](https://distribution.github.io/distribution/storage-drivers/s3/) as backend storage, it's better to separate the storage from the registry container, so you can rebuild or transfer the registry easily.
+
+sample of `config.yml` 
+
+```yaml
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  cache:
+    blobdescriptor: inmemory
+  s3:
+    accesskey: <>
+    secretkey: <>
+    region: <>
+    regionendpoint: <>
+    bucket: <>
+    loglevel: debug
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+proxy:
+  remoteurl: https://registry-1.docker.io
+  ttl: 168h
+```
