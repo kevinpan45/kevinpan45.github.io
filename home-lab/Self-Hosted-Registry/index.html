@@ -70,6 +70,12 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#docker-distribution">Docker Distribution</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#advanced">Advanced</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#s3-as-storage">S3 as Storage</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                   </li>
               </ul>
@@ -184,6 +190,37 @@ sudo systemctl restart docker
   &quot;docker.io&quot;:
     endpoint:
       - http://192.168.31.110:5000
+</code></pre>
+<h2 id="advanced">Advanced</h2>
+<h3 id="s3-as-storage">S3 as Storage</h3>
+<p>CNCF Distribution support <a href="https://distribution.github.io/distribution/storage-drivers/s3/">S3 Storage</a> as backend storage, it's better to separate the storage from the registry container, so you can rebuild or transfer the registry easily.</p>
+<p>sample of <code>config.yml</code> </p>
+<pre><code class="language-yaml">version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  cache:
+    blobdescriptor: inmemory
+  s3:
+    accesskey: &lt;&gt;
+    secretkey: &lt;&gt;
+    region: &lt;&gt;
+    regionendpoint: &lt;&gt;
+    bucket: &lt;&gt;
+    loglevel: debug
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+proxy:
+  remoteurl: https://registry-1.docker.io
+  ttl: 168h
 </code></pre>
               
             </div>
