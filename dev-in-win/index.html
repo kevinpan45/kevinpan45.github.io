@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Common cli - KP45 Blogs</title>
+    <title>Dev in win - KP45 Blogs</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -14,8 +14,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Common cli";
-        var mkdocs_page_input_path = "common-cli.md";
+        var mkdocs_page_name = "Dev in win";
+        var mkdocs_page_input_path = "dev-in-win.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -41,12 +41,16 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Welcome to KP45 Blog</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Common cli</a>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../common-cli/">Common cli</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../dev-in-win/">Dev in win</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Dev in win</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#lrzsz-alternative">lrzsz Alternative</a>
+    </li>
+    </ul>
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Argo workflows</span></p>
@@ -107,7 +111,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Common cli</li>
+      <li class="breadcrumb-item active">Dev in win</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -116,22 +120,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <ul>
-<li>Git sync remove branch in upstream</li>
-</ul>
-<pre><code class="language-bash">git remote prune origin
-</code></pre>
-<ul>
-<li>Gradle show dependency tree</li>
-</ul>
-<pre><code class="language-bash">gradle :&lt;project name&gt;:dependencies
+                <h2 id="windows-terminal">Windows Terminal</h2>
+<h3 id="lrzsz-alternative">lrzsz Alternative</h3>
+<p><a href="https://github.com/microsoft/terminal/issues/1602">lrzsz</a> is not supported in Windows Terminal. The alternative is to use <a href="https://github.com/trzsz/trzsz">trzsz</a>.</p>
+<ol>
+<li>Install trzsz on Server</li>
+</ol>
+<p>https://trzsz.github.io/go</p>
+<ol>
+<li>Install trzsz on Windows Terminal</li>
+</ol>
+<p>https://trzsz.github.io/ssh</p>
+<ol>
+<li>Use trzsz</li>
+</ol>
+<p>use <code>tssh</code> to remote host</p>
+<pre><code class="language-bash"># execute then select file to upload
+trz
+# specify file path to download
+tsz &lt;file path&gt;
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="Welcome to KP45 Blog"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../dev-in-win/" class="btn btn-neutral float-right" title="Dev in win">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../common-cli/" class="btn btn-neutral float-left" title="Common cli"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../argo-workflows/deploy/" class="btn btn-neutral float-right" title="Deploy">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -154,10 +168,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../common-cli/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../dev-in-win/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../argo-workflows/deploy/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
