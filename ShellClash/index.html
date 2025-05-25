@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Common cli - KP45 Blogs</title>
+    <title>ShellClash - KP45 Blogs</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -14,8 +14,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Common cli";
-        var mkdocs_page_input_path = "common-cli.md";
+        var mkdocs_page_name = "ShellClash";
+        var mkdocs_page_input_path = "ShellClash.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -41,12 +41,18 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Welcome to KP45 Blog</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ShellClash/">ShellClash</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">ShellClash</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#install-shellclash">Install ShellClash</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#customize-rules">Customize Rules</a>
+    </li>
+    </ul>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Common cli</a>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../common-cli/">Common cli</a>
                 </li>
               </ul>
               <ul>
@@ -111,7 +117,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Common cli</li>
+      <li class="breadcrumb-item active">ShellClash</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -120,22 +126,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <ul>
-<li>Git sync remove branch in upstream</li>
-</ul>
-<pre><code class="language-bash">git remote prune origin
-</code></pre>
+                <h1 id="shellclash">ShellClash</h1>
+<p>Official website:</p>
 <ul>
-<li>Gradle show dependency tree</li>
+<li><a href="https://github.com/juewuy/ShellCrash">GitHub</a></li>
+<li><a href="https://juewuy.github.io/">Blog</a></li>
 </ul>
-<pre><code class="language-bash">gradle :&lt;project name&gt;:dependencies
+<h2 id="install-shellclash">Install ShellClash</h2>
+<p><a href="https://github.com/juewuy/ShellCrash/blob/dev/README_CN.md#%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85">Install in Linux</a></p>
+<h2 id="customize-rules">Customize Rules</h2>
+<p>Create <code>/etc/ShellCrash/yamls/rules.yaml</code> to customize rules.</p>
+<p><strong>Sample to bypass local network: *.home</strong></p>
+<pre><code class="language-yaml">- DOMAIN-SUFFIX,*.home,DIRECT
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../ShellClash/" class="btn btn-neutral float-left" title="ShellClash"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../dev-in-win/" class="btn btn-neutral float-right" title="Dev in win">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href=".." class="btn btn-neutral float-left" title="Welcome to KP45 Blog"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../common-cli/" class="btn btn-neutral float-right" title="Common cli">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -158,10 +167,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../ShellClash/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../dev-in-win/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../common-cli/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
