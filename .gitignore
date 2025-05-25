@@ -2,3 +2,6 @@
 build/
 # ignore mkdocs site directory
 site/
+# venv
+.venv/
+venv

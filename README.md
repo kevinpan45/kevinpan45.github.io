@@ -10,6 +10,14 @@ Switch to docs branch, write docs and push
 apt install mkdocs
 ```
 
+Install plugins
+
+- [mkdocs_puml](https://github.com/MikhailKravets/mkdocs_puml)
+
+```bash
+pip install mkdocs_puml
+```
+
 3. Deploy to GitHub Page
 
 ```bash
