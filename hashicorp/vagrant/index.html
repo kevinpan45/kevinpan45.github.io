@@ -155,6 +155,7 @@ vboxmanage --version
 
   config.vm.synced_folder &quot;.&quot;, &quot;/vagrant&quot;, disabled: true
 
+  config.vm.hostname = &quot;dokploy&quot;
 
   config.vm.provider &quot;virtualbox&quot; do |vb|
     vb.memory = &quot;8192&quot; # 8GB
@@ -165,6 +166,9 @@ vboxmanage --version
     # use tsinghua apt source https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/
     echo &quot;deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse&quot; | sudo tee /etc/apt/sources.list
     apt update
+    # Install NTP service to sync time
+    apt-get install ntpdate
+    ntpdate -s pool.ntp.org
   SHELL
 end
 </code></pre>
