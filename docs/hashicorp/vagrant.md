@@ -44,6 +44,9 @@ Vagrant.configure("2") do |config|
     # use tsinghua apt source https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/
     echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse" | sudo tee /etc/apt/sources.list
     apt update
+    # Install NTP service to sync time
+    apt-get install ntpdate
+    ntpdate -s pool.ntp.org
   SHELL
 end
 ```
