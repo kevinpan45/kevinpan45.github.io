@@ -56,6 +56,12 @@
               <p class="caption"><span class="caption-text">Argo workflows</span></p>
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Deploy</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#loadbalancer-recommended">LoadBalancer (Recommended)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#port-forward">Port Forward</a>
+    </li>
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Github</span></p>
@@ -136,10 +142,22 @@
 export ARGO_WORKFLOWS_VERSION=&quot;v3.6.2&quot;
 autok3s kubectl create namespace argo
 autok3s kubectl apply -n argo -f &quot;https://github.com/argoproj/argo-workflows/releases/download/${ARGO_WORKFLOWS_VERSION}/quick-start-minimal.yaml&quot;
-# forward port to local
-nohup autok3s kubectl -n argo port-forward --address 0.0.0.0 service/argo-server 2746:2746 &gt; port-forward.log 2&gt;&amp;1 &amp;
 </code></pre>
-<p><strong><em>Set Mirror Registry for Kubernetes (Optional for China)</em></strong></p>
+<h3 id="access-argo-workflows">Access Argo-Workflows</h3>
+<p>Argo Workflows is not accessible by default. You can access it via a LoadBalancer service or port-forwarding. After that, you can access the Argo Workflows UI at <code>https://&lt;your-ip&gt;:2746</code>.</p>
+<h4 id="loadbalancer-recommended">LoadBalancer (Recommended)</h4>
+<pre><code class="language-bash"># Update Argo Service to LoadBalancer Type
+autok3s kubectl patch svc argo-server -n argo -p '{&quot;spec&quot;:{&quot;type&quot;:&quot;LoadBalancer&quot;,&quot;ports&quot;:[{&quot;name&quot;:&quot;web&quot;,&quot;port&quot;:2746,&quot;targetPort&quot;:2746}]}}'
+# Verify LoadBalancer Assignment, Check if the LoadBalancer has been assigned an external IP
+autok3s kubectl get svc argo-server -n argo
+# By default, argo-server expects to be accessed with a `/argo/` base path. If you want to access it directly at the root path, update the deployment
+autok3s kubectl patch deployment argo-server -n argo -p '{&quot;spec&quot;:{&quot;template&quot;:{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;argo-server&quot;,&quot;env&quot;:[{&quot;name&quot;:&quot;ARGO_BASE_HREF&quot;,&quot;value&quot;:&quot;/&quot;}]}]}}}}'
+</code></pre>
+<h4 id="port-forward">Port Forward</h4>
+<p>Kubernetes streamingConnectionIdleTimeout mechanism will stop the port forward after 4 hours. You need to restart the port forward command manually after that, unrecommended for production use.</p>
+<pre><code class="language-bash">nohup autok3s kubectl -n argo port-forward --address 0.0.0.0 service/argo-server 2746:2746 &gt; port-forward.log 2&gt;&amp;1 &amp;
+</code></pre>
+<h3 id="set-mirror-registry-for-kubernetes-optional">Set Mirror Registry for Kubernetes (Optional)</h3>
 <p>Sample of k3s and daocloud mirror</p>
 <p>Create <code>/etc/rancher/k3s/registries.yaml</code> described in <a href="https://docs.rancher.cn/docs/k3s/installation/private-registry/_index/">k3s Private Registry</a></p>
 <pre><code class="language-yaml">mirrors:
@@ -148,7 +166,8 @@ nohup autok3s kubectl -n argo port-forward --address 0.0.0.0 service/argo-server
       - https://docker.m.daocloud.io
 </code></pre>
 <p>then restart k3s service</p>
-<pre><code class="language-bash">sudo systemctl restart k3s
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl restart k3s
 </code></pre>
               
             </div>
