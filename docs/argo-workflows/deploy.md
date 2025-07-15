@@ -54,3 +54,18 @@ then restart k3s service
 sudo systemctl daemon-reload
 sudo systemctl restart k3s
 ```
+
+### Setup Custom Artifact Repository (Optional)
+
+[Offical DOC](https://argo-workflows.readthedocs.io/en/latest/configure-artifact-repository/)
+
+You can set up a custom artifact repository for Argo Workflows. This is useful if you want to use a private registry or a specific repository for your workflow artifacts.
+
+- Access the Kubernetes cluster where Argo Workflows is installed.
+- Edit the `workflow-controller-configmap` in the `argo` namespace
+
+- Add or modify the `artifactRepository` section to point to your custom repository. For example: update `my-key` under `data` section with your s3 settings.
+
+- Change the `workflows.argoproj.io/default-artifact-repository` to your custom repository, like `workflows.argoproj.io/default-artifact-repository: my-key`.
+
+***You need to resubmit the workflow to make artifact repository take effect if you change the `artifact-repositories` config map.***
