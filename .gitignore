@@ -5,3 +5,4 @@ site/
 # venv
 .venv/
 venv
+mkdocs
